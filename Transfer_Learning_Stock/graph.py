@@ -13,7 +13,7 @@ from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
 import warnings
 warnings.filterwarnings('ignore')
 
-df = pd.read_csv('D:\\RSBP\\Transfer_Learning_Stock\\BBCA_fix.csv')
+df = pd.read_csv('Transfer_Learning_Stock\\BBCA_fix.csv')
 print(df.head())
 print("")
 print(df.shape)
@@ -43,11 +43,12 @@ for i, col in enumerate(features):
   sb.boxplot(df[col])
 plt.show()
 
-splitted = df['Date'].str.split('-', expand=True)
- 
-df['day'] = splitted[2].astype('int')
-df['month'] = splitted[1].astype('int')
-df['year'] = splitted[0].astype('int')
+df['Date'] = pd.to_datetime(df['Date'], format='%d/%m/%Y', errors='coerce')
+
+df['day'] = df['Date'].dt.day
+df['month'] = df['Date'].dt.month
+df['year'] = df['Date'].dt.year
+
  
 print(df.head())
 
